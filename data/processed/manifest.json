@@ -1,0 +1,28 @@
+{
+  "source_url": "https://raw.githubusercontent.com/czyssrs/FinQA/0f16e2867befa6840783e58be38c9efb9229d742/dataset/test.json",
+  "sha256": "831dbfb2e785dbc227f895ce3f24046433467aec67b09db2bd6ac7692a8a30dc",
+  "seed": 42,
+  "n_docs": 380,
+  "n_units": 11865,
+  "units_per_doc": {
+    "min": 7,
+    "median": 30.0,
+    "max": 266
+  },
+  "n_questions_all": 1147,
+  "n_questions_subset": 200,
+  "subset_gold_count_dist": {
+    "1": 97,
+    "2": 76,
+    "3": 17,
+    "4": 10
+  },
+  "ambiguity_all": {
+    "exact_dup_question_ratio": 0.024,
+    "masked_dup_question_ratio": 0.172
+  },
+  "ambiguity_subset": {
+    "exact_dup_question_ratio": 0.025,
+    "masked_dup_question_ratio": 0.215
+  }
+}
