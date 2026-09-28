@@ -54,10 +54,10 @@ def evaluate(results: list[dict], field: str) -> dict[str, float]:
 
 def print_table(rows: dict[str, dict[str, float]]) -> None:
     cols = ["Recall@5", "Recall@10", "MRR", "NDCG@10"]
-    print(f"| {'Method':<16} | " + " | ".join(f"{c:>9}" for c in cols) + " |")
-    print(f"|{'-'*18}|" + "".join(f"{'-'*11}|" for _ in cols))
+    print(f"| {'Method':<19} | " + " | ".join(f"{c:>9}" for c in cols) + " |")
+    print(f"|{'-'*21}|" + "".join(f"{'-'*11}|" for _ in cols))
     for name, m in rows.items():
-        print(f"| {name:<16} | " + " | ".join(f"{m[c]:9.3f}" for c in cols) + " |")
+        print(f"| {name:<19} | " + " | ".join(f"{m[c]:9.3f}" for c in cols) + " |")
 
 
 def worked_example(results: list[dict], field: str) -> None:
@@ -85,7 +85,8 @@ def main() -> None:
     bm25 = load_jsonl(ROOT / "runs/bm25_test200/bm25_top10.jsonl")
     dense = load_jsonl(ROOT / "runs/dense_test200/dense_top10.jsonl")
     hybrid = load_jsonl(ROOT / "runs/hybrid_test200/hybrid_top10.jsonl")
-    results = merge_by_qid(bm25, dense, hybrid)
+    reranker = load_jsonl(ROOT / "runs/rerank_test200/reranker_top10.jsonl")
+    results = merge_by_qid(bm25, dense, hybrid, reranker)
 
     table = {
         "BM25 (in_page)": evaluate(results, "bm25_in_page_top10"),
@@ -94,6 +95,8 @@ def main() -> None:
         "Dense (pooled)": evaluate(results, "dense_pooled_top10"),
         "Hybrid (in_page)": evaluate(results, "hybrid_in_page_top10"),
         "Hybrid (pooled)": evaluate(results, "hybrid_pooled_top10"),
+        "Reranker (in_page)": evaluate(results, "reranker_in_page_top10"),
+        "Reranker (pooled)": evaluate(results, "reranker_pooled_top10"),
     }
     print_table(table)
     worked_example(results, "bm25_pooled_top10")
