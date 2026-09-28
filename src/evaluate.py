@@ -84,13 +84,16 @@ def merge_by_qid(*result_lists: list[dict]) -> list[dict]:
 def main() -> None:
     bm25 = load_jsonl(ROOT / "runs/bm25_test200/bm25_top10.jsonl")
     dense = load_jsonl(ROOT / "runs/dense_test200/dense_top10.jsonl")
-    results = merge_by_qid(bm25, dense)
+    hybrid = load_jsonl(ROOT / "runs/hybrid_test200/hybrid_top10.jsonl")
+    results = merge_by_qid(bm25, dense, hybrid)
 
     table = {
         "BM25 (in_page)": evaluate(results, "bm25_in_page_top10"),
         "BM25 (pooled)": evaluate(results, "bm25_pooled_top10"),
         "Dense (in_page)": evaluate(results, "dense_in_page_top10"),
         "Dense (pooled)": evaluate(results, "dense_pooled_top10"),
+        "Hybrid (in_page)": evaluate(results, "hybrid_in_page_top10"),
+        "Hybrid (pooled)": evaluate(results, "hybrid_pooled_top10"),
     }
     print_table(table)
     worked_example(results, "bm25_pooled_top10")
